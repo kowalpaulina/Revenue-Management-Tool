@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Revenue Management Tool</title>
+    
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script src="js/pm.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/queries.css">
+</head>
+<body>
+       
+    <header>
+           <h1>Revenue Management</h1>
+           <h2>Narzędzie do zarządzania ceną dnia*</h2>
+    </header>
+       
+    <div class="validation-comment"></div>
+       
+    <section class="clearfix">
+       <div class="form clearfix">  
+       
+            <label for="guarantee">Udział rezerwacji niegwarantowanych (%):
+            <input type="number" class="guarantee"></label>
+
+
+            <label for="occ">Aktualne obłożenie (%): 
+            <input type="number" class="occ"></label>
+
+            <label for="price">Twoja aktualna cena (EUR): 
+            <input type="number" class="price"></label>
+
+            <label for="competition">Cena [niskiej] konkurencji (EUR):
+            <input type="number" class="lowcompetition"></label>
+
+             <label for="competition">Cena [wysokiej] konkurencj (EUR):
+            <input type="number" class="highcometition"></label>
+         </div>
+        <button class="questionButton">Pokaż sugestię:</button>
+        
+        <div class="result">Sugestia: </div>
+        <div class="additional_info">* Zaprezentowane dane są przykładowe.</div>
+   
+  </section> 
+</body>
+</html>
