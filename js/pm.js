@@ -36,19 +36,20 @@ function validation(){
     var price = $('.price');
     var lowcompetition = $('.lowcompetition');
     var highcometition = $('.highcometition');
-    var uncorrect_flag = 0;
+    var incorrect_flag = 0;
     var array = [occ, price, lowcompetition, highcometition];
     
     for(i=0; i<array.length; i++){
         var empty = array[i].val() == "";
         var notAnumber = isNaN(array[i].val());
-        var uncorrect = empty || notAnumber;
-        if(uncorrect){
+        var negative_number = array[i].val() <0;
+        var incorrect = empty || notAnumber || negative_number;
+        if(incorrect){
             var array = [occ, price, lowcompetition, highcometition];
             var result = $('.result');
             $(result).append("<p></p>");
-            var uncorrect_flag = uncorrect_flag+1;
-            console.log("result= "+uncorrect_flag);
+            var incorrect_flag =+1;
+            console.log("result= "+incorrect_flag);
             
             
             switch(array[i]){
@@ -61,12 +62,16 @@ function validation(){
             case array[3]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące wysokiej konkurencji</p>");
                 break;
             }
+            
+            if(negative_number){
+                $('.validation-comment').append("<p>Liczba musi być dodatnia</p>");
+            }
             }
         }
-    
-    if(uncorrect_flag == 0){
+    console.log(incorrect_flag);
+    if(incorrect_flag == 0){
         showSuggest();
-        console.log("result= "+uncorrect_flag);
+        console.log("result= "+incorrect_flag);
     }
     }
 
@@ -79,26 +84,35 @@ function showSuggest(){
         var highcometition = $('.highcometition').val();
         var NonGuarantee = $('.guarantee').val();
         var result = $('.result');
-    
-        var veryHighOcc = occ >= 80;
-        var highOcc = occ >= 40 && occ < 80;
-        var notHighOcc = occ> 25 && occ < 40;
-        var lowOcc = occ <= 25;
         var highNonGuarantee = NonGuarantee > 40;
         var EUR = "<span>EUR</span>";
     
+        var veryHighOcc = occ >= 85;
+        var highOcc = occ >= 70 && occ < 84;
+        var mediumOcc = occ >= 60 && occ < 69;
+        var averageOcc = occ >= 50 && occ < 60;
+        var notHighOcc = occ> 25 && occ < 50;
+        var lowOcc = occ <= 25;
+    
         var highcompetition_level = 80;
     
-        var price_level1 = "<span>65EUR</span>"
-        var price_level2 = "<span>70EUR</span>"
-        var price_level3 = "<span>80EUR</span>"
-        var price_level4 = "<span>85EUR</span>"
+        var price_level1 = "<span>65EUR</span>";
+        var price_level2 = "<span>70EUR</span>";
+        var price_level2x = "<span>75EUR</span>";
+        var price_level3 = "<span>80EUR</span>";
+        var price_level4 = "<span>85EUR</span>";
+        
+        var newprice_level1 = parseInt(lowcompetition)+5;
+        var newprice_levelx2 = parseInt(highcometition)-10;
+        var newprice_level2 = parseInt(highcometition);
+    
+        var newprice_level3 = parseInt(highcometition)+10;
 
     
     if(veryHighOcc){
         if(highcometition >= highcompetition_level){
-            var newprice_level1 = parseInt(highcometition)+10;
-            $(result).append("<p>Przy bardzo wysokim OCC wznieś się ponad konkurencję i podnieś cenę do: " + newprice_level1 + EUR +"</p>");
+            
+            $(result).append("<p>Przy bardzo wysokim OCC wznieś się ponad konkurencję i podnieś cenę do: " + newprice_level3 + EUR +"</p>");
         }else{
             $(result).append("<p>Przy bardzo wysokim OCC podnieś cenę do:" +price_level4 + "</p>");  
         }
@@ -106,23 +120,43 @@ function showSuggest(){
     
     if(highOcc){
         if(highcometition >= highcompetition_level){
-            var newprice_level3 = parseInt(highcometition);
-            $(result).append("<p>Ustaw cenę na </span>"+ newprice_level3 + EUR + "</p>");
+            $(result).append("<p>Ustaw cenę na </span>"+ newprice_level2 + EUR + "</p>");
         }else{
             $(result).append("<p>Ustaw cene na " + price_level3 + "</p>");  
         }
     }
     
+    
+    if(mediumOcc){
+        if(highcometition > 90 && highcometition < 105){
+            $(result).append("<p>Ustaw cenę na </span>"+ newprice_levelx2 + EUR + "</p>");
+        } else{
+            $(result).append("<p>Ustaw cenę na </span>"+ price_level2x + "</p>");
+        }
+    }
+    
+    if(averageOcc){
+        if(highcometition >= 90 && lowcompetition >= 65) {
+            $(result).append("<p>Ustaw cenę na "+ price_level3 + "</p>");
+        } else if (highcometition < 90 && lowcompetition < 65) {
+            $(result).append("<p>Skontaktuj się aby uzyskać pełen dostęp</p>");
+            //$(result).append("<p>Ustaw cenę na </span>"+ price_level2 + "</p>");
+    } else {
+        $(result).append("<p>Ustaw cenę na "+ price_level2 + "</p>");
+    }
+    }
+    
+    
     if(notHighOcc){
         if(lowcompetition < price && highcometition < price){
             $(result).append("<p>Obniż cenę do " + price_level1 + "</p>");
         }else
-            $(result).append("<p>Pozostań przy </p>" + price_level2 + "</p>");
+            $(result).append("<p>Pozostań przy " + price_level2 + "</p>");
         }
     
     if(lowOcc){
-        var newprice_level2 = parseInt(lowcompetition)+5;
-        $(result).append("<p>Ustaw cenę na poziomie " + newprice_level2 + EUR + "</p>");
+        
+        $(result).append("<p>Ustaw cenę na poziomie " + newprice_level1 + EUR + "</p>");
     }  
 }
     
