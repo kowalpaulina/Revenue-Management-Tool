@@ -62,13 +62,13 @@ function validation(){
             case array[3]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące wysokiej konkurencji</p>");
                 break;
             }
-            
-            if(negative_number){
-                $('.validation-comment').append("<p>Liczba musi być dodatnia</p>");
-            }
-            }
         }
-    console.log(incorrect_flag);
+    }
+    
+    if(array[0].val() <0 || array[1].val() <0 || array[2].val() <0 || array[3].val() <0){
+                $('.validation-comment').append("<p>Pamiętaj, że podane liczby muszą być dodatnie</p>");
+        }
+    
     if(incorrect_flag == 0){
         showSuggest();
         console.log("result= "+incorrect_flag);
