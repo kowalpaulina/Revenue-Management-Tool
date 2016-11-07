@@ -8,6 +8,7 @@
     <title>Revenue Management Tool by Paulina Kowal</title>
     <meta name="description" content="Revenue Management, Yield Management">
     
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script src="js/pm.js"></script>
@@ -21,26 +22,35 @@
            <h2>Narzędzie do zarządzania ceną dnia*</h2>
     </header>
        
-    <div class="validation-comment"></div>
+    
        
     <section class="clearfix">
        <div class="form clearfix">  
        
             <label for="guarantee">Udział rezerwacji niegwarantowanych (%):
             <input type="number" id="guarantee" class="guarantee"></label>
-
-
+            <div class="validation-comment6"></div>
+            
             <label for="occ">Aktualne obłożenie (%): 
-            <input type="number" id="occ" class="occ"></label>
-
+            <input type="number" id="occ" class="occ" data-title="Pole wymagane"></label>
+            <div class="validation-comment1"></div>
+            
             <label for="price">Twoja aktualna cena (EUR): 
-            <input type="number" id="price" class="price"></label>
+            <input type="number" id="price" class="price" data-title="Pole wymagane"></label>
+            <div class="validation-comment2"></div>
 
             <label for="competition">Cena [niskiej] konkurencji (EUR):
-            <input type="number" id="competition" class="lowcompetition"></label>
-
-             <label for="highcompetition">Cena [wysokiej] konkurencj (EUR):
-            <input type="number" id="highcompetition" class="highcometition"></label>
+            <input type="number" id="competition" class="lowcompetition" data-title="Pole wymagane"></label>
+            <div class="validation-comment3"></div>
+            
+            <label for="highcompetition">Cena [wysokiej] konkurencj (EUR):
+            <input type="number" id="highcompetition" class="highcometition" data-title="Pole wymagane"></label>
+            <div class="validation-comment4"></div>
+            
+            <label for="standardprice">Twoja standardowa cena dnia (EUR):
+            <input type="number" id="standardprice" class="standardprice" data-title="Pole wymagane"></label>
+            <div class="validation-comment5"></div>
+            
          </div>
         <button class="questionButton">Pokaż sugestię</button>
         

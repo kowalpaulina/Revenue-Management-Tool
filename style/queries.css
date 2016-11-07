@@ -13,6 +13,10 @@
      section {
             width: 95%;}
     
+    .error {
+        font-size: 80%;
+        margin-left: 25%;}
+    
     label {
         display: block;
         float: left;
@@ -36,4 +40,12 @@
     .result {
         margin-top: 15%;
     }
+    
+    @media only screen and (max-width: 570px){
+     .error {
+        font-size: 80%;
+        margin-left: 10%;}
+    }
+    
+    
 }

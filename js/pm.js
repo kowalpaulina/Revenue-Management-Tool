@@ -8,7 +8,7 @@ $(document).ready(function(){
 function uncorrect_high_unGuarantee(){ 
     $('.guarantee').change(function(){
         if ($('.guarantee').val() > 40) {
-                $('.validation-comment').append("<p>Zagwarantuj niegwaranty i wróć ponownie</p>");    
+                $('.validation-comment6').append("<p class=\"error\">Pamiętaj, aby zagwarantować niegwaranty!</p>");    
             }
         });
     }
@@ -36,36 +36,44 @@ function validation(){
     var price = $('.price');
     var lowcompetition = $('.lowcompetition');
     var highcometition = $('.highcometition');
+    var standardPrice = $('.standardprice');
     var incorrect_flag = 0;
-    var array = [occ, price, lowcompetition, highcometition];
+    var array = [occ, price, lowcompetition, highcometition, standardPrice];
     
     for(i=0; i<array.length; i++){
+        console.log(i);
         var empty = array[i].val() == "";
         var notAnumber = isNaN(array[i].val());
         var negative_number = array[i].val() <0;
         var incorrect = empty || notAnumber || negative_number;
         if(incorrect){
-            var array = [occ, price, lowcompetition, highcometition];
+            array = [occ, price, lowcompetition, highcometition, standardPrice];
             var result = $('.result');
             $(result).append("<p></p>");
             var incorrect_flag =+1;
             console.log("result= "+incorrect_flag);
             
+            var comment = array[i];
+            var komentarz =array[i] + i;
+            console.log("kom: " + komentarz)
+            $(comment).addClass(comment+i);
             
             switch(array[i]){
-            case array[0]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące obłożenia</p>");
+            case array[0]: $('.validation-comment1').append("<p class=\"error\">Uzupełnij dane dotyczące obłożenia</p>");
                 break;
-            case array[1]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące Twojej ceny</p>");
+            case array[1]: $('.validation-comment2').append("<p class=\"error\">Uzupełnij dane dotyczące Twojej ceny</p>");
                 break;
-            case array[2]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące niskiej konkurencji</p>");
+            case array[2]: $('.validation-comment3').append("<p class=\"error\">Uzupełnij dane dotyczące niskiej konkurencji</p>");
                 break;
-            case array[3]: $('.validation-comment').append("<p>Uzupełnij dane dotyczące wysokiej konkurencji</p>");
+            case array[3]: $('.validation-comment4').append("<p class=\"error\">Uzupełnij dane dotyczące wysokiej konkurencji</p>");
+                break;
+            case array[4]: $('.validation-comment5').append("<p class=\"error\">Uzupełnij dane dotyczące Twojej standardowej ceny dnia</p>");
                 break;
             }
         }
     }
     
-    if(array[0].val() <0 || array[1].val() <0 || array[2].val() <0 || array[3].val() <0){
+    if(array[0].val() <0 || array[1].val() <0 || array[2].val() <0 || array[3].val() <0 || array[4].val() <0){
                 $('.validation-comment').append("<p>Pamiętaj, że podane liczby muszą być dodatnie</p>");
         }
     
@@ -78,11 +86,12 @@ function validation(){
 
 function showSuggest(){
     
-        var occ = $('.occ').val();
-        var price = $('.price').val();
-        var lowcompetition = $('.lowcompetition').val();
-        var highcometition = $('.highcometition').val();
+        occ = $('.occ').val();
+        price = $('.price').val();
+        lowcompetition = $('.lowcompetition').val();
+        highcometition = $('.highcometition').val();
         var NonGuarantee = $('.guarantee').val();
+        standardPrice = $('.standardprice').val();
         var result = $('.result');
         var highNonGuarantee = NonGuarantee > 40;
         var EUR = "<span>EUR</span>";
@@ -96,16 +105,15 @@ function showSuggest(){
     
         var highcompetition_level = 80;
     
-        var price_level1 = "<span>65EUR</span>";
-        var price_level2 = "<span>70EUR</span>";
-        var price_level2x = "<span>75EUR</span>";
-        var price_level3 = "<span>80EUR</span>";
-        var price_level4 = "<span>85EUR</span>";
+        var price_level1 = parseInt(standardPrice)-5;
+        var price_level2 = parseInt(standardPrice); 
+        var price_level2_1 = parseInt(standardPrice)+5; 
+        var price_level3 = parseInt(standardPrice)+10; 
+        var price_level4 = parseInt(standardPrice)+15; 
         
         var newprice_level1 = parseInt(lowcompetition)+5;
         var newprice_levelx2 = parseInt(highcometition)-10;
         var newprice_level2 = parseInt(highcometition);
-    
         var newprice_level3 = parseInt(highcometition)+10;
 
     
@@ -114,7 +122,7 @@ function showSuggest(){
             
             $(result).append("<p>Przy bardzo wysokim OCC wznieś się ponad konkurencję i podnieś cenę do: " + newprice_level3 + EUR +"</p>");
         }else{
-            $(result).append("<p>Przy bardzo wysokim OCC podnieś cenę do:" +price_level4 + "</p>");  
+            $(result).append("<p>Przy bardzo wysokim OCC podnieś cenę do:" +price_level4 + EUR + "</p>");  
         }
     }
     
@@ -122,27 +130,27 @@ function showSuggest(){
         if(highcometition >= highcompetition_level){
             $(result).append("<p>Ustaw cenę na </span>"+ newprice_level2 + EUR + "</p>");
         }else{
-            $(result).append("<p>Ustaw cene na " + price_level3 + "</p>");  
+            $(result).append("<p>Ustaw cene na " + price_level3 + EUR + "</p>");  
         }
     }
     
     
     if(mediumOcc){
         if(highcometition > 90 && highcometition < 105){
-            $(result).append("<p>Ustaw cenę na </span>"+ newprice_levelx2 + EUR + "</p>");
+            $(result).append("<p>Ustaw cenę na "+ newprice_levelx2 + EUR + "</p>");
         } else{
-            $(result).append("<p>Ustaw cenę na </span>"+ price_level2x + "</p>");
+            $(result).append("<p>Ustaw cenę na "+ price_level2 + EUR + "</p>");
         }
     }
     
     if(averageOcc){
         if(highcometition >= 90 && lowcompetition >= 65) {
-            $(result).append("<p>Ustaw cenę na "+ price_level3 + "</p>");
+            $(result).append("<p>Ustaw cenę na "+ price_level3 + EUR + "</p>");
         } else if (highcometition < 90 && lowcompetition < 65) {
             $(result).append("<p>Skontaktuj się aby uzyskać pełen dostęp</p>");
             //$(result).append("<p>Ustaw cenę na </span>"+ price_level2 + "</p>");
     } else {
-        $(result).append("<p>Ustaw cenę na "+ price_level2 + "</p>");
+        $(result).append("<p>Ustaw cenę na "+ price_level2 + EUR + "</p>");
     }
     }
     
@@ -156,35 +164,39 @@ function showSuggest(){
     
     if(lowOcc){
         
-        $(result).append("<p>Ustaw cenę na poziomie " + newprice_level1 + EUR + "</p>");
+        $(result).append("<p>Ustaw cenę na poziomie " + price_level1 + EUR + "</p>");
     }  
 }
     
 function localstorage_setValue(){
-    var guarantee = $('.guarantee').val();
-    var occ = $('.occ').val();
-    var price = $('.price').val();
-    var lowcompetition = $('.lowcompetition').val();
-    var highcometition = $('.highcometition').val();
+    guarantee = $('.guarantee').val();
+    occ = $('.occ').val();
+    price = $('.price').val();
+    lowcompetition = $('.lowcompetition').val();
+    highcometition = $('.highcometition').val();
+    standardPrice = $('.standardprice').val();
     
     localStorage.setItem("gwarantowane", guarantee);
     localStorage.setItem("obłożenie", occ);
     localStorage.setItem("cena", price);
     localStorage.setItem("niska_cena_konkurencji", lowcompetition);
     localStorage.setItem("wysoka_cena_konkurencji", highcometition);
+    localStorage.setItem("standardowa_cena", standardPrice);
 }
 
 function localstorage_getValue(){
-    var new_guarantee = localStorage.getItem("gwarantowane");
-    var new_occ = localStorage.getItem("obłożenie");
-    var new_price = localStorage.getItem("cena");
-    var new_lowcompetition = localStorage.getItem("niska_cena_konkurencji");
-    var new_highcompetition = localStorage.getItem("wysoka_cena_konkurencji");
+    new_guarantee = localStorage.getItem("gwarantowane");
+    new_occ = localStorage.getItem("obłożenie");
+    new_price = localStorage.getItem("cena");
+    new_lowcompetition = localStorage.getItem("niska_cena_konkurencji");
+    new_highcompetition = localStorage.getItem("wysoka_cena_konkurencji");
+    new_standardPrice = localStorage.getItem("standardowa_cena");
     
     $('.guarantee').val(new_guarantee);
     $('.occ').val(new_occ);
     $('.price').val(new_price);
     $('.lowcompetition').val(new_lowcompetition);
     $('.highcometition').val(new_highcompetition);
+    $('.standardprice').val(new_standardPrice);
 }
 
